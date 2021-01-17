@@ -14,8 +14,8 @@ body,
 }
 
 body {
-    background: rgba(0, 0, 0, 0.500) url(./assets/background.jpg) no-repeat;
-    background-size: cover;
+    background: rgba(0, 0, 0, 0.500) url(./assets/background.jpg) repeat;
+    background-size: auto;
     -webkit-font-smoothing: antialiased !important;
 }
 

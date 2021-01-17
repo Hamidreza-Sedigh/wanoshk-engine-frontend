@@ -27,6 +27,9 @@ const TopNav = (props) => {
                 <Link to="/sources" >sources</Link>
             </NavItem>
             <NavItem>
+                <Link to="/addSource" >add source</Link>
+            </NavItem>
+            <NavItem>
                 <Link to="/" >Dashboard</Link>
             </NavItem>
             <NavItem>

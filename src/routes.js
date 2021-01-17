@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard/index';
 import EventsPage from './pages/EventsPage';
 import MyRegistrations from './pages/MyRegistrations';
 import SourcePage from './pages/sourcesPage';
+import AllSources from './pages/sourcesPage/allSources';
 import TopNav from './components/TopNav';
 
 export default function Routes(){
@@ -18,7 +19,8 @@ export default function Routes(){
                 <Route path='/login' exact component={Login} />
                 <Route path='/register' exact component={Register} />
                 <Route path='/events' component={EventsPage} />
-                <Route path='/sources' component={SourcePage} />
+                <Route path='/addSource' component={SourcePage} />
+                <Route path='/sources' component={AllSources} />
             </Switch>
         </BrowserRouter>
     );
