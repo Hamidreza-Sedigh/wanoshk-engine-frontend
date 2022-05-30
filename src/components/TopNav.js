@@ -33,6 +33,9 @@ const TopNav = (props) => {
                 <Link to="/" >Dashboard</Link>
             </NavItem>
             <NavItem>
+                <Link to="/contactus" >Contact Us</Link>
+            </NavItem>
+            <NavItem>
                 <Link to="/myregistrations" >My Registrations</Link>
             </NavItem>
           </Nav>

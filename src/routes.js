@@ -7,6 +7,7 @@ import EventsPage from './pages/EventsPage';
 import MyRegistrations from './pages/MyRegistrations';
 import SourcePage from './pages/sourcesPage';
 import AllSources from './pages/sourcesPage/allSources';
+import ContactUs  from './pages/ContactUs';
 import TopNav from './components/TopNav';
 
 export default function Routes(){
@@ -21,6 +22,7 @@ export default function Routes(){
                 <Route path='/events' component={EventsPage} />
                 <Route path='/addSource' component={SourcePage} />
                 <Route path='/sources' component={AllSources} />
+                <Route path='/contactus' component={ContactUs} />
             </Switch>
         </BrowserRouter>
     );

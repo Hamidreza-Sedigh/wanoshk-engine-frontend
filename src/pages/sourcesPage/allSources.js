@@ -1,23 +1,24 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import api from '../../services/api';
-import { Container, Button, Form, FormGroup, Label, Input, Alert, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown  } from 'reactstrap';
+import { Container } from 'reactstrap';
+// import { Button, Form, FormGroup, Label, Input, Alert, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown  } from 'reactstrap';
 //import "./events.css"
 
 //orderPage is for create order
 
 export default function SourcesPage({history}){
 
-    const [sourceName, setSourceName] = useState("")
-    const [siteAddress, setSiteAddress] = useState("")
-    const [rssURL, setRssURL] = useState("")
-    const [tagClassName, setTagClassName] = useState("")
-    const [secondTag, setSecondTag] = useState("")
-    const [isLocalImg, setIsLocalImg] = useState("")
-    const [isCategorized, setIsCategorized] = useState(true)
-    const [category, setCategory] = useState("")
-    const [error, setError]  = useState(false)
-    const [success, setSuccess] = useState(false)
-    const [dropdownOpen, setOpen] = useState(false); // check if neccesory
+    // const [sourceName, setSourceName] = useState("")
+    // const [siteAddress, setSiteAddress] = useState("")
+    // const [rssURL, setRssURL] = useState("")
+    // const [tagClassName, setTagClassName] = useState("")
+    // const [secondTag, setSecondTag] = useState("")
+    // const [isLocalImg, setIsLocalImg] = useState("")
+    // const [isCategorized, setIsCategorized] = useState(true)
+    // const [category, setCategory] = useState("")
+    // const [error, setError]  = useState(false)
+    // const [success, setSuccess] = useState(false)
+    // const [dropdownOpen, setOpen] = useState(false); // check if neccesory
     const [sources, setSources] = useState([]);
     const user = localStorage.getItem('user');
 

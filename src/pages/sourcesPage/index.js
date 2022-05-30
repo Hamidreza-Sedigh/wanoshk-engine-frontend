@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import api from '../../services/api';
-import { Container, Button, Form, FormGroup, Label, Input, Alert, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown  } from 'reactstrap';
+import { Container, Button, Form, FormGroup, Input, Alert  } from 'reactstrap';
+// import {Label, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown} from 'reactstrap';
 //import "./events.css"
 
 //orderPage is for create order
