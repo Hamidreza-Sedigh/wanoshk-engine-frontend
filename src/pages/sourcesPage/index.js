@@ -92,11 +92,11 @@ export default function SourcesPage({history}){
                                onChange={(src) => setIsLocalImg(src.target.value)} />
                     </FormGroup>
                     <FormGroup>
-                        <Input id="isCategorized" type="text" value={isCategorized} placeholder={'Event isCategorized'} 
+                        <Input id="isCategorized" type="text" value={isCategorized} placeholder={'isCategorized'} 
                                onChange={(src) => setIsCategorized(src.target.value)} />
                     </FormGroup>
                     <FormGroup>
-                        <Input id="category" type="text" value={category} placeholder={'Event category'} 
+                        <Input id="category" type="text" value={category} placeholder={'category'} 
                                onChange={(src) => setCategory(src.target.value)} />
                     </FormGroup>
                     
