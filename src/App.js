@@ -9,12 +9,14 @@ import './App.css';
 function App() {
   return (
     <ContextWrapper>
-      <Container>
+      {/* <Container> */}
+      <div className='myContainer'>
         <h1>wanoshk Engine.</h1>
         <div className="content" > 
           <Routes/>
         </div>
-      </Container>
+      </div>
+      {/* </Container> */}
     </ContextWrapper>
   );
 }
