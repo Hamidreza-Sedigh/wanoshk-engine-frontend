@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import api from '../../services/api';
-import { Container, Button, Form, FormGroup, Input, Alert, Row, Col, Label } from 'reactstrap';
+import { Container, Button, Form, FormGroup, Input, Alert, Row, Col, Label, 
+  Dropdown, DropdownToggle, DropdownMenu, DropdownItem 
+} from 'reactstrap';
 // import {Label, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown} from 'reactstrap';
 //import "./events.css"
 
@@ -297,50 +299,108 @@ export default function SourcesPage({history}){
                     
                     <Row>
                         
-                        <Col md={4}>
+                        <Col md={6}>
                             <FormGroup check>
                                 <Input id="isLocalImg" type="checkbox" value={isLocalImg} placeholder={'isLocalImg'} 
                                     onChange={(src) => setIsLocalImg(src.target.value)} />
                                 <Label check for="exampleCheck" >isLocalImg</Label>
                             </FormGroup>
                         </Col>
-                        <Col md={4}>
+                        <Col md={6}>
                             <FormGroup>
                                 <Input id="secondTag" type="text" value={secondTag} placeholder={'secondTag'} 
                                     onChange={(src) => setSecondTag(src.target.value)} />
                             </FormGroup>
                         </Col>
+                        
                     </Row>
                     
                     <Row>
-                        <Col md={6}>
+                        <Col md={4}>
                             <FormGroup check>
                                 <Input id="isCategorized" type="checkbox" value={isCategorized} placeholder={'isCategorized'} 
                                     onChange={(src) => setIsCategorized(src.target.value)} />
                                 <Label check for="isCategorized" >isCategorized</Label>
                             </FormGroup>
                         </Col>
-                        <Col md={6}>
+                        <Col md={4}>
                             <FormGroup>
                                 <Input id="category" type="text" value={categoryPr} placeholder={'category'} 
                                     onChange={(src) => setCategoryPr(src.target.value)} />
                             </FormGroup>
                         </Col>
+                        <Col md={4}>
+                          <FormGroup>
+                            <div className="d-flex ">
+                              <Label> category : </Label>
+                              <Dropdown
+                                isOpen={dropdownOpen}
+                                toggle={toggle1}
+                                // direction={direction}
+                              >
+                                <DropdownToggle caret color="primary">
+                                  {categoryPr}
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                  {categories.map((c) => (
+                                    <DropdownItem
+                                      key={c.categoryPr}
+                                      value={c.categoryPr}
+                                      onClick={changeCategory}
+                                    >
+                                      {c.categoryPr}
+                                    </DropdownItem>
+                                  ))}
+                                </DropdownMenu>
+                              </Dropdown>
+                            </div>
+                          </FormGroup>
+                        </Col>
                     </Row>
 
                     <Row>
-                        <Col md={6}>
+                        <Col md={4}>
                             <FormGroup check>
                                 <Input id="isSubCategorized" type="checkbox" value={isCategorized} placeholder={'isSubCategorized'} 
                                     onChange={(src) => setIsSubCategorized(src.target.value)} />
                                 <Label check for="isSubCategorized" >isSubCategorized</Label>
                             </FormGroup>
                         </Col>
-                        <Col md={6}>
+                        <Col md={4}>
                             <FormGroup>
                                 <Input id="subCategory" type="text" value={subCategoryPr} placeholder={'subCategory'} 
                                     onChange={(src) => setSubCategoryPr(src.target.value)} />
                             </FormGroup>
+                        </Col>
+                        <Col>
+                          <FormGroup>
+                            <div className="d-flex ">
+                              <Label> subCategory: </Label>
+                              <Dropdown
+                                isOpen={dropdownOpen2}
+                                toggle={toggle2}
+                                // direction={direction}
+                              >
+                                <DropdownToggle caret color="primary">
+                                  {subCategoryPr}
+                                </DropdownToggle>
+
+                                <DropdownMenu>
+                                  {subs
+                                    .filter((su) => su.surCode == categoryCode)
+                                    .map((ss) => (
+                                      <DropdownItem
+                                        key={ss.subCategoryPr}
+                                        value={ss.subCategoryPr}
+                                        onClick={changeSubCategory}
+                                      >
+                                        {ss.subCategoryPr}
+                                      </DropdownItem>
+                                    ))}
+                                </DropdownMenu>
+                              </Dropdown>
+                            </div>
+                          </FormGroup>
                         </Col>
                     </Row>
                     
