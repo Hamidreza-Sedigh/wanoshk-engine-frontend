@@ -16,7 +16,7 @@ export default function SourcesPage({history}){
     const [rssURL, setRssURL] = useState("");
     const [tagClassName, setTagClassName] = useState("");
     const [secondTag, setSecondTag] = useState("");
-    const [isLocalImg, setIsLocalImg] = useState("");
+    const [isLocalImg, setIsLocalImg] = useState(true);
     const [isCategorized, setIsCategorized] = useState(true);
     const [categoryPr, setCategoryPr] = useState("");
     const [categoryEn, setCategoryEn] = useState("");
@@ -302,7 +302,7 @@ export default function SourcesPage({history}){
                         <Col md={6}>
                             <FormGroup check>
                                 <Input id="isLocalImg" type="checkbox" value={isLocalImg} placeholder={'isLocalImg'} 
-                                    onChange={(src) => setIsLocalImg(src.target.value)} />
+                                     onChange={(src) => setIsLocalImg(src.target.checked)} /> 
                                 <Label check for="exampleCheck" >isLocalImg</Label>
                             </FormGroup>
                         </Col>
@@ -319,7 +319,7 @@ export default function SourcesPage({history}){
                         <Col md={4}>
                             <FormGroup check>
                                 <Input id="isCategorized" type="checkbox" value={isCategorized} placeholder={'isCategorized'} 
-                                    onChange={(src) => setIsCategorized(src.target.value)} />
+                                    onChange={(src) => setIsCategorized(src.target.checked)} />
                                 <Label check for="isCategorized" >isCategorized</Label>
                             </FormGroup>
                         </Col>
@@ -362,7 +362,7 @@ export default function SourcesPage({history}){
                         <Col md={4}>
                             <FormGroup check>
                                 <Input id="isSubCategorized" type="checkbox" value={isCategorized} placeholder={'isSubCategorized'} 
-                                    onChange={(src) => setIsSubCategorized(src.target.value)} />
+                                    onChange={(src) => setIsSubCategorized(src.target.checked)} />
                                 <Label check for="isSubCategorized" >isSubCategorized</Label>
                             </FormGroup>
                         </Col>
