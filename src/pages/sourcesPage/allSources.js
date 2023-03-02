@@ -52,6 +52,7 @@ export default function SourcesPage({history}){
                     <th>#</th>
                     <th>sourceName</th>
                     <th>sourceNameEn</th>
+                    <th>enable</th>
                     <th>siteAddress</th>
                     <th>rssURL</th>
                     {/* <th>tagClassName</th>
@@ -62,7 +63,7 @@ export default function SourcesPage({history}){
                     <th>subCategory</th>
                     <th>lastTimeFetch</th>
                     <th>status</th>
-                    <th>enable</th>
+                    
                     </tr>
                 </thead>
                 <tbody>
@@ -71,13 +72,14 @@ export default function SourcesPage({history}){
                         <td className="news-source"> {s._id} </td>
                         <td className="news-source"> {s.sourceName} </td>
                         <td className="news-source"> {s.sourceNameEn} </td>
+                        <td className="news-source"> {s.enable?'yep':'no'} </td>
                         <td className="news-source"> {s.siteAddress} </td>
                         <td className="news-source"> {s.rssURL} </td>
                         <td className="news-source"> {s.category} </td>
                         <td className="news-source"> {s.subCategory} </td>
                         <td className="news-source"> {s.lastTimeFetch} </td>
                         <td className="news-source"> {s.status} </td>
-                        <td className="news-source"> {s.enable} </td>
+                        
                     </tr>
                     ))}
                 </tbody>
