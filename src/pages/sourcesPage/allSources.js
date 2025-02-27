@@ -46,10 +46,10 @@ export default function SourcesPage({history}){
             <h2>all sources:</h2>
             <div className="table">
                 {/* <Table striped hover responsive bordered borderless  size="sm"> */}
-                <Table striped hover responsive>
+                <Table striped hover responsive size="sm">
                 <thead>
                     <tr className="table-dark">
-                    <th>#</th>
+                    
                     <th>sourceName</th>
                     <th>sourceNameEn</th>
                     <th>enable</th>
@@ -63,13 +63,12 @@ export default function SourcesPage({history}){
                     <th>subCategory</th>
                     <th>lastTimeFetch</th>
                     <th>status</th>
-                    
+                    <th>#</th>
                     </tr>
                 </thead>
                 <tbody>
                     {sources.map((s) => (
                     <tr key={s._id}>
-                        <td className="news-source"> {s._id} </td>
                         <td className="news-source"> {s.sourceName} </td>
                         <td className="news-source"> {s.sourceNameEn} </td>
                         <td className="news-source"> {s.enable?'yep':'no'} </td>
@@ -79,7 +78,7 @@ export default function SourcesPage({history}){
                         <td className="news-source"> {s.subCategory} </td>
                         <td className="news-source"> {s.lastTimeFetch} </td>
                         <td className="news-source"> {s.status} </td>
-                        
+                        <td className="news-source"> {s._id} </td>
                     </tr>
                     ))}
                 </tbody>

@@ -28,7 +28,6 @@ export default function Dashboard({history}){
     // const toggle = () => setDropdownOpen(!dropdownOpen)
 
     useEffect(()=>{
-        getEvents()
         getLastTime()
         getNewsCount()
     },[]);
