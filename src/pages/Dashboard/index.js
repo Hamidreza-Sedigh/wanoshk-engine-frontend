@@ -28,6 +28,7 @@ export default function Dashboard({history}){
     // const toggle = () => setDropdownOpen(!dropdownOpen)
 
     useEffect(()=>{
+        console.log("useEffect test.");
         getLastTime()
         getNewsCount()
     },[]);
@@ -68,7 +69,9 @@ export default function Dashboard({history}){
 
     const getNewsCount = async() => {
         try {
+            console.log("getNewsCount satr:")
             const response = await api.get('/getNewsCount', { headers: { user: user }});
+            console.log("getNewsCount after query:")
             console.log("TEST newCount:", response.data.newsCount)
             setNewsCount(response.data.newsCount);
         } catch (error) {
