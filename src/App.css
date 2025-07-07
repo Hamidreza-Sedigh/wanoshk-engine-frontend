@@ -106,3 +106,30 @@ button {
     flex-direction: column;
     margin-bottom: 1rem;
 }
+
+.news-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
+.news-content {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Tahoma', sans-serif;
+  line-height: 1.8;
+}
+
+.news-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
+.news-content a {
+  color: #007bff;
+  text-decoration: underline;
+  word-break: break-word;
+}
