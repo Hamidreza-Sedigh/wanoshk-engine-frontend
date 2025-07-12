@@ -2,32 +2,29 @@ import React, { useState, useMemo, useEffect } from 'react';
 import api from '../../services/api';
 import { Container, Table } from 'reactstrap';
 // import { Button, Form, FormGroup, Label, Input, Alert, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown  } from 'reactstrap';
-//import "./events.css"
-
-//orderPage is for create order
 
 export default function SourcesPage({history}){
 
-    // const [sourceName, setSourceName] = useState("")
-    // const [siteAddress, setSiteAddress] = useState("")
-    // const [rssURL, setRssURL] = useState("")
-    // const [tagClassName, setTagClassName] = useState("")
-    // const [secondTag, setSecondTag] = useState("")
-    // const [isLocalImg, setIsLocalImg] = useState("")
-    // const [isCategorized, setIsCategorized] = useState(true)
-    // const [category, setCategory] = useState("")
-    // const [error, setError]  = useState(false)
-    // const [success, setSuccess] = useState(false)
-    // const [dropdownOpen, setOpen] = useState(false); // check if neccesory
+    const [dropdownOptions, setDropdownOptions] = useState([]);
+    const [selectedSource, setSelectedSource] = useState('');
     const [sources, setSources] = useState([]);
     const user = localStorage.getItem('user');
 
     useEffect(()=>{
-        if(!user) history.push('./login')
         getSources();
-    },[])
+        getDistinct();
+    },[]);
 
-    
+    useEffect(()=>{
+        // وقتی selectedSource تغییر کرد:
+        if (selectedSource) {
+            getOneSource(selectedSource);
+        } else {
+            getSources();
+        }
+    },[selectedSource]);
+
+
     const getSources = async(filter) => {
         try {
             const url = `/getAllSources`
@@ -35,14 +32,55 @@ export default function SourcesPage({history}){
             console.log("response:", response.data);
             setSources(response.data.sources)
         } catch (error) {
-            history.push('/login');
+            // history.push('/login');
+            console.error('خطا در دریافت منابع:', error);
+
         }
-        
     };
 
+    const getDistinct = async(filter) => {
+        try {
+            const url = `/getDistinctSources`
+            const response = await api.get(url, { headers: { user: user }})
+            console.log("response:", response.data);
+            setDropdownOptions(response.data.sources)
+        } catch (error) {
+            console.error('خطا در دریافت منابع:', error);
+        }
+    };
+
+    const getOneSource = async() => {
+        try {
+            const url = `/getOneSource/${encodeURIComponent(selectedSource)}`;
+            console.log("selectedSource:", selectedSource);
+            const response = await api.get(url, { headers: { user: user }})
+            console.log("response:", response.data);
+            setSources(response.data.sources)
+        } catch (error) {
+            //history.push('/login');
+            console.error('خطا در دریافت منابع:', error);
+        }
+    };
+
+    
     return(
         // <Container>
         <div>
+            <div className="mb-4">
+            <label className="block mb-1 font-medium">انتخاب منبع:</label>
+            <select
+                className="w-full p-2 border rounded"
+                value={selectedSource}
+                onChange={(e) => setSelectedSource(e.target.value)}
+                >
+                <option value="">همه منابع</option>
+                {dropdownOptions.map((name, index) => (
+                    <option key={index} value={name}>
+                        {name}
+                    </option>
+                ))}
+            </select>
+        </div>
             <h2>all sources:</h2>
             <div className="table">
                 {/* <Table striped hover responsive bordered borderless  size="sm"> */}
