@@ -24,12 +24,35 @@ export default function SourcesPage({history}){
         }
     },[selectedSource]);
 
-
+    const toggleSourceStatus = async (sourceId, currentStatus) => {
+        try {
+            const url = `/api/sources/toggle-status`
+            const response = await api.put(url,{id: sourceId,enable: !currentStatus}, { headers: { user: user }});
+            console.log("**response in toggle:", response);
+            if (response.status === 200) {
+                console.log("**if ejra shod");
+                
+                // به روزرسانی تنها منبع تغییر کرده در لیست sources
+                setSources(prevSources => 
+                    prevSources.map(source => 
+                    source._id === sourceId 
+                        ? { ...source, enable: response.data.enable } 
+                        : source
+                    )
+                )
+            } else {
+                console.log("**else ejra shod");
+                console.error('خطا در تغییر وضعیت');
+            }
+        } catch (error) {
+            console.error('خطا در ارتباط با سرور:', error);
+        }
+        };
     const getSources = async(filter) => {
         try {
             const url = `/getAllSources`
             const response = await api.get(url, { headers: { user: user }})
-            console.log("response:", response.data);
+            //console.log("response:", response.data);
             setSources(response.data.sources)
         } catch (error) {
             // history.push('/login');
@@ -42,7 +65,7 @@ export default function SourcesPage({history}){
         try {
             const url = `/getDistinctSources`
             const response = await api.get(url, { headers: { user: user }})
-            console.log("response:", response.data);
+            // console.log("response:", response.data);
             setDropdownOptions(response.data.sources)
         } catch (error) {
             console.error('خطا در دریافت منابع:', error);
@@ -109,7 +132,7 @@ export default function SourcesPage({history}){
                     <tr key={s._id}>
                         <td className="news-source"> {s.sourceName} </td>
                         <td className="news-source"> {s.sourceNameEn} </td>
-                        <td className="news-source"> {s.enable?'yep':'no'} </td>
+                        <td onClick={() => toggleSourceStatus(s._id, s.enable)} style={{cursor: 'pointer'}} className="news-source"> {s.enable?'yep':'no'} </td>
                         <td className="news-source"> {s.siteAddress} </td>
                         <td className="news-source"> {s.rssURL} </td>
                         <td className="news-source"> {s.category} </td>
