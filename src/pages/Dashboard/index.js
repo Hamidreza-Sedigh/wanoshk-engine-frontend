@@ -5,7 +5,7 @@ import './dashboard.css'
 // import { Button, ButtonGroup, Alert, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import socketio from 'socket.io-client';
 //import Registration from '../../../../backend/src/models/Registration';
-
+import EngineControll from '../../components/EngineControl';
 
 //dashboard will show all the events       
 export default function Dashboard({history}){
@@ -93,7 +93,7 @@ export default function Dashboard({history}){
                 </p>
             </div>
             <div>
-
+                <EngineControll/>
             </div>
         </>
     );
