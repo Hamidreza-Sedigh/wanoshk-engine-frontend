@@ -3,6 +3,7 @@ import api from '../../services/api';
 import { Container, Button, Form, FormGroup, Input, Alert, Row, Col, Label, 
   Dropdown, DropdownToggle, DropdownMenu, DropdownItem 
 } from 'reactstrap';
+import RemoveTagsInput from '../../components/RemoveTagsInput';
 // import {Label, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown} from 'reactstrap';
 //import "./events.css"
 
@@ -23,6 +24,9 @@ export default function SourcesPage({history}){
     const [isSubCategorized, setIsSubCategorized] = useState(true);
     const [subCategoryPr, setSubCategoryPr] = useState("");
     const [subCategoryEn, setSubCategoryEn] = useState("");
+    const [cutAfter, setCutAfter] = useState("");
+    const [removeTagsInput, setRemoveTagsInput] = useState(''); 
+    const [removeTags, setRemoveTags] = useState([]);
     const [categoryCode, setCategoryCode] = useState('');
     const [error, setError]  = useState(false);
     const [success, setSuccess] = useState(false);
@@ -227,6 +231,8 @@ export default function SourcesPage({history}){
         src.preventDefault()
         const sourceData = new FormData();
 
+        const removeTagsArray = removeTags; // آرایهٔ واقعی از state
+
         sourceData.append("sourceName", sourceName);
         sourceData.append("sourceNameEn",sourceNameEn);
         sourceData.append("siteAddress", siteAddress);
@@ -240,6 +246,10 @@ export default function SourcesPage({history}){
         sourceData.append("isSubCategorized", isSubCategorized);
         sourceData.append("subCategory", subCategoryPr);
         sourceData.append("subCategoryEn", subCategoryEn);
+        sourceData.append("removeTags", JSON.stringify(removeTagsArray));
+
+        sourceData.append("cutAfter", cutAfter);
+
         
         console.log("test1")
         try {
@@ -284,21 +294,26 @@ export default function SourcesPage({history}){
                             </FormGroup>
                         </Col>
                     </Row>
-                    <FormGroup>
-                        <Input id="siteAddress" type="text" value={siteAddress} placeholder={'siteAddress'} 
-                               onChange={(src) => setSiteAddress(src.target.value)} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Input id="rssURL" type="text" value={rssURL} placeholder={'rssURL'} 
-                               onChange={(src) => setRssURL(src.target.value)} />
-                    </FormGroup>
+                    <Row>
+                      <Col md={6}>
+                        <FormGroup>
+                            <Input id="siteAddress" type="text" value={siteAddress} placeholder={'siteAddress'} 
+                                  onChange={(src) => setSiteAddress(src.target.value)} />
+                        </FormGroup>
+                      </Col>
+                      <Col md={6}>
+                        <FormGroup>
+                            <Input id="rssURL" type="text" value={rssURL} placeholder={'rssURL'} 
+                                  onChange={(src) => setRssURL(src.target.value)} />
+                        </FormGroup>
+                      </Col>
+                    </Row>
                     <FormGroup>
                         <Input id="tagClassName" type="text" value={tagClassName} placeholder={'tagClassName'} 
                                onChange={(src) => setTagClassName(src.target.value)} />
                     </FormGroup>
                     
                     <Row>
-                        
                         <Col md={6}>
                             <FormGroup check>
                                 <Input id="isLocalImg" type="checkbox" value={isLocalImg} placeholder={'isLocalImg'} 
@@ -314,7 +329,20 @@ export default function SourcesPage({history}){
                         </Col>
                         
                     </Row>
-                    
+                    <Row>
+                        <Col md={6}>
+                            <FormGroup>   
+                                <RemoveTagsInput value={removeTags} onChange={setRemoveTags} />
+
+                            </FormGroup>
+                        </Col>
+                        <Col md={6}>
+                            <FormGroup>   
+                                <Input id="cutAfter" type="text" value={cutAfter} placeholder={'cutAfter'} 
+                                    onChange={(src) => setCutAfter(src.target.value)} />
+                            </FormGroup>
+                        </Col>
+                    </Row>
                     <Row>
                         <Col md={4}>
                             <FormGroup check>
