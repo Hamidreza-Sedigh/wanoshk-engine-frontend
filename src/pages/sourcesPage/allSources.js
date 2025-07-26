@@ -116,10 +116,12 @@ export default function SourcesPage({history}){
                     <th>enable</th>
                     <th>siteAddress</th>
                     <th>rssURL</th>
-                    {/* <th>tagClassName</th>
+                    <th>tagClassName</th>
+                    <th>cutAfter</th>
+                    <th>removeTags</th>
                     <th>secondTag</th>
                     <th>isLocalImg</th>
-                    <th>isCategorized</th> */}
+                    <th>isCategorized</th>
                     <th>category</th>
                     <th>subCategory</th>
                     <th>lastTimeFetch</th>
@@ -135,6 +137,12 @@ export default function SourcesPage({history}){
                         <td onClick={() => toggleSourceStatus(s._id, s.enable)} style={{cursor: 'pointer'}} className="news-source"> {s.enable?'yep':'no'} </td>
                         <td className="news-source"> {s.siteAddress} </td>
                         <td className="news-source"> {s.rssURL} </td>
+                        <td className="news-source"> {s.tagClassName} </td>
+                        <td className="news-source"> {s.cutAfter} </td>
+                        <td className="news-source"> {s.removeTags} </td>
+                        <td className="news-source"> {s.secondTag} </td>
+                        <td className="news-source"> {s.isLocalImg} </td>
+                        <td className="news-source"> {s.isCategorized?'yes':'no'} </td>
                         <td className="news-source"> {s.category} </td>
                         <td className="news-source"> {s.subCategory} </td>
                         <td className="news-source"> {s.lastTimeFetch} </td>
