@@ -86,7 +86,9 @@ export default function Dashboard({history}){
             <div>test:</div>
             <div>
                 <p>last time fetch news:
-                    { moment(lastTime.lastTimeFetch).format('YYYY-MM-DD h:mm:ss') } 
+                    {lastTime?.lastTimeFetch 
+                        ? moment(lastTime.lastTimeFetch).format('YYYY-MM-DD h:mm:ss')
+                        : '---'}
                 </p>
                 <p> newsCount:
                     { newsCount }
