@@ -1,7 +1,60 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import api from '../../services/api';
-import { Container, Table } from 'reactstrap';
-// import { Button, Form, FormGroup, Label, Input, Alert, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown  } from 'reactstrap';
+import { Container, Table, Button  } from 'reactstrap';
+
+const EditableCell = ({ value, onSave }) => {
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [val, setVal] = React.useState(value);
+
+  const isBoolean = typeof value === 'boolean';
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    const finalValue = isBoolean ? Boolean(val) : val;
+    if (finalValue !== value) {
+      onSave(finalValue);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') handleBlur();
+    if (e.key === 'Escape') {
+      setIsEditing(false);
+      setVal(value); // برگشت به مقدار قبلی
+    }
+  };
+
+  return (
+    <td onClick={() => setIsEditing(true)} style={{ cursor: 'pointer' }}>
+      {isEditing ? (
+        isBoolean ? (
+          <input
+            type="checkbox"
+            checked={val === true || val === 'true'}
+            onChange={(e) => {
+              setVal(e.target.checked);
+              onSave(e.target.checked);
+              setIsEditing(false);
+            }}
+            autoFocus
+          />
+        ) : (
+          <input
+            type="text"
+            value={val}
+            onChange={(e) => setVal(e.target.value)}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            autoFocus
+          />
+        )
+      ) : (
+        isBoolean ? (value ? '✔️' : '❌') : val
+      )}
+    </td>
+  );
+};
+
 
 export default function SourcesPage({history}){
 
@@ -85,9 +138,36 @@ export default function SourcesPage({history}){
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm('آیا از حذف این سورس مطمئن هستید؟')) return;
+        try {
+            await api.delete(`/api/sources/${id}`, { headers: { user } });
+            setSources(prev => prev.filter(source => source._id !== id));
+        } catch (err) {
+            console.error('خطا در حذف:', err);
+            alert('خطایی در حذف رخ داد.');
+        }
+    };
+
+    const handleEdit = async (id, field, value) => {
+        try {
+            const res = await api.put(`/api/sources/${id}`, { [field]: value }, { headers: { user } });
+            if (res.status === 200) {
+            setSources(prev =>
+                prev.map(src =>
+                src._id === id ? { ...src, [field]: value } : src
+                )
+            );
+            }
+        } catch (err) {
+            console.error('خطا در ویرایش:', err);
+            alert('خطایی در ویرایش رخ داد.');
+        }
+    };
+
+
     
     return(
-        // <Container>
         <div>
             <div className="mb-4">
             <label className="block mb-1 font-medium">انتخاب منبع:</label>
@@ -110,9 +190,9 @@ export default function SourcesPage({history}){
                 <Table striped hover responsive size="sm">
                 <thead>
                     <tr className="table-dark">
-                    
+                    <th></th>
                     <th>sourceName</th>
-                    <th>sourceNameEn</th>
+                    <th>En</th>
                     <th>enable</th>
                     <th>siteAddress</th>
                     <th>rssURL</th>
@@ -130,45 +210,32 @@ export default function SourcesPage({history}){
                     </tr>
                 </thead>
                 <tbody>
-                    {sources.map((s) => (
+                    {sources.map((s, idx) => (
                     <tr key={s._id}>
-                        <td className="news-source"> {s.sourceName} </td>
-                        <td className="news-source"> {s.sourceNameEn} </td>
-                        <td onClick={() => toggleSourceStatus(s._id, s.enable)} style={{cursor: 'pointer'}} className="news-source"> {s.enable?'yep':'no'} </td>
-                        <td className="news-source"> {s.siteAddress} </td>
-                        <td className="news-source"> {s.rssURL} </td>
-                        <td className="news-source"> {s.tagClassName} </td>
-                        <td className="news-source"> {s.cutAfter} </td>
-                        <td className="news-source"> {s.removeTags} </td>
-                        <td className="news-source"> {s.secondTag} </td>
-                        <td className="news-source"> {s.isLocalImg} </td>
-                        <td className="news-source"> {s.isCategorized?'yes':'no'} </td>
-                        <td className="news-source"> {s.category} </td>
-                        <td className="news-source"> {s.subCategory} </td>
-                        <td className="news-source"> {s.lastTimeFetch} </td>
-                        <td className="news-source"> {s.status} </td>
-                        <td className="news-source"> {s._id} </td>
+                        <td><Button size="sm" color="danger" onClick={() => handleDelete(s._id)}>🗑 حذف</Button></td>
+                        <EditableCell value={s.sourceName} onSave={(val) => handleEdit(s._id, 'sourceName', val)} />
+                        <EditableCell value={s.sourceNameEn} onSave={(val) => handleEdit(s._id, 'sourceNameEn', val)} />
+                        <td onClick={() => toggleSourceStatus(s._id, s.enable)} style={{ cursor: 'pointer' }}>{s.enable ? 'yep' : 'no'} </td>
+                        <EditableCell value={s.siteAddress} onSave={(val) => handleEdit(s._id, 'siteAddress', val)} />
+                        <EditableCell value={s.rssURL} onSave={(val) => handleEdit(s._id, 'rssURL', val)} />
+                        <EditableCell value={s.tagClassName} onSave={(val) => handleEdit(s._id, 'tagClassName', val)} />
+                        
+                        <td > {s.cutAfter} </td>
+                        <td > {s.removeTags} </td>
+                        <EditableCell value={s.secondTag} onSave={(val) => handleEdit(s._id, 'secondTag', val)} />
+                        <EditableCell value={s.isLocalImg} onSave={(val) => handleEdit(s._id, 'isLocalImg', val)} />
+                        <td > {s.isCategorized?'yes':'no'} </td>
+                        <td > {s.category} </td>
+                        <td > {s.subCategory} </td>
+                        <td > {s.lastTimeFetch} </td>
+                        <td > {s.status} </td>
+                        <td > {s._id} </td>
                     </tr>
                     ))}
                 </tbody>
                 </Table>
             </div>
-            {/* <ul className="source-list">
-                {sources.map(s => (
-                    <li key={s._id}>
-                        
-                        <span className="news-source">  {s.sourceName} </span>
-                        <span className="news-source">  {s.siteAddress} </span>
-                        <span className="news-source">  {s.rssURL} </span>
-                        <span className="news-source">  {s.secondTag} </span>
-                        <span className="news-source">  {s.isLocalImg} </span>
-                        <span className="news-source">  {s.isCategorized} </span>
-                        <span className="news-source">  {s.category} </span>
-
-                    </li>
-                ))}
-            </ul> */}
-        {/* </Container> */}
+            
         </div>
     );
 
