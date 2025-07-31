@@ -4,6 +4,7 @@ import { Container, Button, Form, FormGroup, Input, Alert, Row, Col, Label,
   Dropdown, DropdownToggle, DropdownMenu, DropdownItem 
 } from 'reactstrap';
 import RemoveTagsInput from '../../components/RemoveTagsInput';
+import RemoveAttrsInput from '../../components/RemoveAttrsInput';
 // import {Label, DropdownItem, DropdownMenu, DropdownToggle, ButtonDropdown} from 'reactstrap';
 //import "./events.css"
 
@@ -26,6 +27,7 @@ export default function SourcesPage({history}){
     const [subCategoryEn, setSubCategoryEn] = useState("");
     const [cutAfter, setCutAfter] = useState("");
     const [removeTagsInput, setRemoveTagsInput] = useState(''); 
+    const [removeAttrs, setRemoveAttrs] = useState([]);
     const [removeTags, setRemoveTags] = useState([]);
     const [categoryCode, setCategoryCode] = useState('');
     const [error, setError]  = useState(false);
@@ -232,6 +234,7 @@ export default function SourcesPage({history}){
         const sourceData = new FormData();
 
         const removeTagsArray = removeTags; // آرایهٔ واقعی از state
+        const removeAttrsArray = removeAttrs;
 
         sourceData.append("sourceName", sourceName);
         sourceData.append("sourceNameEn",sourceNameEn);
@@ -247,6 +250,7 @@ export default function SourcesPage({history}){
         sourceData.append("subCategory", subCategoryPr);
         sourceData.append("subCategoryEn", subCategoryEn);
         sourceData.append("removeTags", JSON.stringify(removeTagsArray));
+        sourceData.append("removeAttrs", JSON.stringify(removeAttrsArray));
 
         sourceData.append("cutAfter", cutAfter);
 
@@ -255,7 +259,7 @@ export default function SourcesPage({history}){
         try {
             if(sourceName !== "" && siteAddress !== "" && rssURL !== "" && tagClassName){
                     console.log("before post");
-                    await api.post("/addSource", sourceData, {headers: {user: user} })
+                      await api.post("/addSource", sourceData, {headers: {user: user} })
                     console.log("success add");
                     setSuccess(true)
                     setTimeout(()=>{
@@ -330,12 +334,20 @@ export default function SourcesPage({history}){
                         
                     </Row>
                     <Row>
-                        <Col md={6}>
+                        <Col md={5}>
                             <FormGroup>   
                                 <RemoveTagsInput value={removeTags} onChange={setRemoveTags} />
 
                             </FormGroup>
                         </Col>
+                        <Col md={7}>
+                          <FormGroup>
+                            <label>Remove Attributes</label>
+                            <RemoveAttrsInput value={removeAttrs} onChange={setRemoveAttrs} />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
                         <Col md={6}>
                             <FormGroup>   
                                 <Input id="cutAfter" type="text" value={cutAfter} placeholder={'cutAfter'} 
