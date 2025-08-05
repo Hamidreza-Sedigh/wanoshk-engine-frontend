@@ -9,6 +9,7 @@ export default function Register({history}){
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] =  useState("");
     const [lastName, setLastName] =  useState("");
+    const [username, setUsername] =  useState("");
 
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -16,8 +17,8 @@ export default function Register({history}){
     const handleSubmit = async evt =>{
         evt.preventDefault()
 
-        if(email !== "" && password !== "" && firstName !== "" && lastName !== ""){
-            const response = await api.post('/user/register', {email, password, firstName, lastName});
+        if(email !== "" && password !== "" && firstName !== "" && lastName !== "" && username !== ""){
+            const response = await api.post('/user/register', {email, password, firstName, lastName, username});
             const user = response.data.user || false;
             const user_id = response.data.user_id || false;
 
@@ -63,6 +64,9 @@ export default function Register({history}){
                     </FormGroup>
                     <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                         <Input type="email" name="email" id="exampleEmail" placeholder="your email" onChange={ evt => setEmail(evt.target.value)}/>
+                    </FormGroup>
+                    <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                        <Input type="username" name="username" id="username" placeholder="your username" onChange={ evt => setUsername(evt.target.value)}/>
                     </FormGroup>
                     <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                         <Input type="password" name="password" id="examplePassword" placeholder="your password" onChange={ evt => setPassword(evt.target.value)} />
