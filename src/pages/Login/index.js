@@ -12,7 +12,7 @@ export default function Login({history}){
 
     const handleSubmit = async evt =>{
         evt.preventDefault()
-        console.log('submit result:' , email, password);
+        // console.log('submit result:' , email, password);
 
         const response = await api.post('/login', {email, password});
         // const userId = response.data._id || false; // before jwt
