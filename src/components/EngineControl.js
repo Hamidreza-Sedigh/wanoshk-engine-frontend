@@ -1,22 +1,22 @@
+// components/EngineControl.js
 import { useState, useEffect } from 'react';
+import api from '../services/api';
 
 function EngineControl() {
   const [status, setStatus] = useState(false);
 
+  // گرفتن وضعیت اولیه موتور
   useEffect(() => {
-    fetch('http://localhost:8080/status')
-      .then(res => res.json())
-      .then(data => setStatus(data.status));
+    api.get('/status')
+      .then(res => setStatus(res.data.status))
+      .catch(err => console.error("Error fetching status:", err));
   }, []);
 
+  // تغییر وضعیت موتور
   const toggleEngine = () => {
-    fetch('http://localhost:8080/status', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: !status })
-    })
-      .then(res => res.json())
-      .then(data => setStatus(data.status));
+    api.post('/status', { status: !status })
+      .then(res => setStatus(res.data.status))
+      .catch(err => console.error("Error toggling engine:", err));
   };
 
   return (

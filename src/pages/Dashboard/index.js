@@ -33,17 +33,18 @@ export default function Dashboard({history}){
         getNewsCount()
     },[]);
 
-    const socket = useMemo( 
-        () => 
-        socketio('http://localhost:8080/', { query: { user: user_id } }),
-        [user_id]
-        );
+    // const socket = useMemo(
+    //     () => 
+    //     socketio('http://localhost:8080/', { query: { user: user_id } }),
+    //     [user_id]
+    // );
 
     useEffect(()=>{
         console.log("e10 test");
         //socket.on('hamid', response => console.log(response) )
-        socket.on('registration_request', data => ( setEventsRequest([ ...eventsRequest, data]) ) )
-    },[eventsRequest, socket]);
+        // socket.on('registration_request', data => ( setEventsRequest([ ...eventsRequest, data]) ) )
+    //},[eventsRequest, socket]);
+    },[eventsRequest]);
 
 
 

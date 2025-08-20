@@ -12,20 +12,23 @@ export default function Login({history}){
 
     const handleSubmit = async evt =>{
         evt.preventDefault()
-        // console.log('submit result:' , email, password);
+        console.log('LoginTest- submited' );
 
         const response = await api.post('/login', {email, password});
+        console.log('LoginTest- after post.' );
         // const userId = response.data._id || false; // before jwt
         const user_id = response.data.user_id || false;
         const user = response.data.user || false;
 
         try {
             if(user && user_id){
+                console.log('LoginTest- if executed.' );
                 localStorage.setItem('user', user);
                 localStorage.setItem('user_id', user_id);
                 setIsLoggedIn(true);
                 history.push('/');
             } else {
+                console.log('LoginTest- else executed.' );
                 const {message} = response.data;
                 setError(true);
                 setErrorMessage(message)
@@ -35,6 +38,7 @@ export default function Login({history}){
                 }, 2000)
             }    
         } catch (error) {
+            console.log('LoginTest- catch executed.' );
             setError(true);
             setErrorMessage("the server returned an Error")
         }
